@@ -6,7 +6,7 @@
       </f7-nav-left>
       <div class="title" style="left: 2px;">
         <!-- <a class="link external" href="/">CLNK</a> -->
-        <a href="/" class="link external root-path-button">
+        <a href="/main/" class="link reload-all root-path-button">
           <img src="../assets/img/gen_lion_logo.png" alt="genius_lion" style="display:block;width:30px;">
         </a>
       </div>
