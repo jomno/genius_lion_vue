@@ -18,6 +18,19 @@
   background-image: url('../img/game_2.jpg');
 }
 
+.job_back {
+  background-image: url('../img/job_back.png');
+}
+
+.job_human {
+  background-image: url('../img/job_human.png');
+}
+
+.job_human_b {
+  background-image: url('../img/job_human_b.png');
+}
+
+
 
 
 .material-icons {
@@ -351,7 +364,7 @@ div.demo-lazy {
 .demo-swiper-cube {
   width: 80%;
   height: 70%;
-  top: 15%;
+  /* top: 15%; */
 }
 .demo-swiper-coverflow {
   height: 60%;

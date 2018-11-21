@@ -2,7 +2,10 @@
   <f7-page>
     <f7-navbar>
       <f7-nav-left>
-        <f7-link panel-open="left" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
+        <a class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only"></span>
+        </a>
       </f7-nav-left>
       <div class="title" style="left: 2px;">
         <!-- <a class="link external" href="/">CLNK</a> -->
@@ -11,10 +14,7 @@
         </a>
       </div>
       <f7-nav-right>
-        <a class="link back">
-          <i class="icon icon-back"></i>
-          <span class="ios-only"></span>
-        </a>
+        <f7-link panel-open="right" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
       </f7-nav-right>
     </f7-navbar>
     <f7-list inset>
@@ -23,7 +23,7 @@
 
     <f7-block-title>생성된 방</f7-block-title>
     <f7-list inset>
-      <f7-list-item link="#" title="원노와 함깨 춤을"  badge="1 / 8">
+      <f7-list-item link="/wating_room/" title="원노와 함깨 춤을"  badge="1 / 8">
         <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
       </f7-list-item>
       <f7-list-item link="#" title="양송이 버섯은 이응이 네개"  badge="2 / 8">
@@ -35,15 +35,25 @@
     </f7-list>
 
     <f7-popover class="popover-menu">
-      <f7-block-title>기본 설정</f7-block-title>
-      <f7-block strong class="text-align-center">
+      <f7-block-title>좀비게임 방 생성하기</f7-block-title>
+      <f7-list no-hairlines-md>
+        <f7-list-input
+          label="방 이름"
+          type="text"
+          placeholder="이름"
+          clear-button
+        ></f7-list-input>
+      </f7-list>
+      <f7-block class="text-align-center">
         <small class="display-block">방 최대 인원</small>
         <f7-stepper :value="8" :min="4" :max="18" :step="1"></f7-stepper>
       </f7-block>
-      <f7-list>
-        <f7-list-item link="#" popover-close title="랜덤"></f7-list-item>
-        <f7-list-item link="#" popover-close title="고정"></f7-list-item>
-      </f7-list>
+      <f7-block strong inset>
+        <f7-segmented round round tag="p">
+          <f7-button round outline popover-close>취소</f7-button>
+          <f7-button round outline active>생성</f7-button>
+        </f7-segmented>
+      </f7-block>
 
     </f7-popover>
 
@@ -71,7 +81,7 @@
         self.$f7.preloader.show();
         setTimeout(() => {
           self.$f7.preloader.hide();
-        }, 2000);
+        }, 500);
       },
     }
   }

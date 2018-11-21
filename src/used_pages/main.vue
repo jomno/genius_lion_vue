@@ -2,14 +2,21 @@
   <f7-page :page-content="false">
     <f7-navbar>
       <f7-nav-left>
-        <f7-link panel-open="left" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
+        <a class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only"></span>
+        </a>
       </f7-nav-left>
+
       <div class="title" style="left: 2px;">
         <!-- <a class="link external" href="/">CLNK</a> -->
-        <a href="/main/" class="link reload-all root-path-button">
-          <img src="../assets/img/gen_lion_logo.png" alt="genius_lion" style="display:block;width:30px;">
+        <a href="/main/" class="link reload-all root-path-button" @click="openIndicator">
+          <img src="../assets/img/gen_lion_logo.png" alt="genius_lion" style="display:block;width:30px;" >
         </a>
       </div>
+      <f7-nav-right>
+        <f7-link panel-open="right" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
+      </f7-nav-right>
     </f7-navbar>
     <f7-toolbar tabbar labels>
       <f7-link tab-link="#game_desc" tab-link-active>
@@ -55,7 +62,7 @@
 
           <div class="card demo-card-header-pic" v-for="room in rooms">
             <div class="game_1 card-header align-items-flex-end">{{room.title}}</div>
-            <div class="card-footer"><a href="#" class="link">Like</a><a href="/game_1/" class="link">참가하기</a></div>
+            <div class="card-footer"><a href="#" class="link">Like</a><a href="/jombie_game/" class="link">참가하기</a></div>
           </div>
 
         </f7-block>
@@ -107,6 +114,13 @@
       f7Toolbar,
     },
     methods: {
+      openIndicator() {
+        const self = this;
+        self.$f7.preloader.show();
+        setTimeout(() => {
+          self.$f7.preloader.hide();
+        }, 500);
+      },
       toggleToolbarPosition() {
         this.$$(this.$el).find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
       },
@@ -117,6 +131,7 @@
         twono: "장순호",
         threeno: "미정",
         isBottom: false,
+        popupOpened: false,
         rooms:  [
           { title: '좀비게임' },
           { title: '신분교환' }

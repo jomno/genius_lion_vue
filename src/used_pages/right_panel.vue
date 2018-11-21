@@ -30,5 +30,14 @@
       f7ListItem,
       f7Link,
     },
+    methods: {
+      openIndicator() {
+        const self = this;
+        self.$f7.preloader.show();
+        setTimeout(() => {
+          self.$f7.preloader.hide();
+        }, 500);
+      },
+    }
   };
 </script>
