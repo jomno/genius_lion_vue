@@ -6,10 +6,14 @@ import App from './App'
 
 import Framework7 from 'framework7/framework7.esm.bundle.js';
 import Framework7Vue from 'framework7-vue/framework7-vue.esm.bundle.js';
+import VueLodash from 'vue-lodash'
+
+const options = { name: 'lodash' }
 
 Framework7.use(Framework7Vue);
 
 Vue.config.productionTip = false
+Vue.use(VueLodash, options)
 
 /* eslint-disable no-new */
 const app = new Vue({
