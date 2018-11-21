@@ -6,6 +6,7 @@ import RightPanel from './used_pages/right_panel.vue';
 import JombieGame from './used_pages/jombie_game.vue';
 import WatingRoom from './used_pages/wating_room.vue';
 import OpenJob from './used_pages/open_job.vue';
+import Round from './used_pages/round.vue';
 
 
 // Pages
@@ -30,6 +31,10 @@ export default [
   {
     path: '/open_job/',
     component: OpenJob,
+  },
+  {
+    path: '/round/',
+    component: Round,
   },
   // Default route (404 page). MUST BE THE LAST
   {

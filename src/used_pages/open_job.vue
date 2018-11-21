@@ -28,6 +28,9 @@
       </div>
     </div>
 
+    <f7-list inset>
+      <f7-list-button href="/round/"  title="게임 방 가기" color="red"></f7-list-button>
+    </f7-list>
 
   </f7-page>
 </template>
