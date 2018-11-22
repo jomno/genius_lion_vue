@@ -9,6 +9,7 @@ import OpenJob from './used_pages/open_job.vue';
 import Round from './used_pages/round.vue';
 
 
+
 // Pages
 export default [
   // wonno 커스텀 라우트

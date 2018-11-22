@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^5.5.9",
+    "firebaseui": "^3.4.1",
     "framework7": "^3.5.2",
     "framework7-vue": "^3.5.2",
     "pusher-js": "^4.3.1",

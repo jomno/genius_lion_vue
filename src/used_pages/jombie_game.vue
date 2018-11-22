@@ -45,10 +45,10 @@
           clear-button
         ></f7-list-input>
       </f7-list>
-      <f7-block class="text-align-center">
+      <!-- <f7-block class="text-align-center">
         <small class="display-block">방 최대 인원</small>
         <f7-stepper :value="8" :min="4" :max="18" :step="1"></f7-stepper>
-      </f7-block>
+      </f7-block> -->
       <f7-block strong inset>
         <f7-segmented round round tag="p">
           <f7-button round outline popover-close>취소</f7-button>
