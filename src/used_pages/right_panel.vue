@@ -1,6 +1,7 @@
 <template>
   <f7-page>
-    <f7-block-title>{{this.$store.getters.user.name}}</f7-block-title>
+    <f7-block-title v-if="user">{{this.$store.getters.user.name}}</f7-block-title>
+    <f7-block-title v-if="user">{{this.$store.getters.user.q_user_id}}</f7-block-title>
     <f7-block>
       <p v-if="loading">Loading...</p>
     </f7-block>

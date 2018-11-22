@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 import { config } from '@/helpers/firebaseConfig'
+import { $http } from '@/utils/api'
 
 
 Vue.use(Vuex)
@@ -11,7 +12,13 @@ if (!firebase.apps.length) {
 }
 
 const state = {
-  user: null,
+  user: {
+    uid: '',
+    name: '',
+    email: '',
+    photoUrl: '',
+    q_user_id: ''
+  },
   loading: false,
   error: null
 }
@@ -58,13 +65,27 @@ const actions = {
       .then(
         user => {
           commit('setLoading', false)
-          const newUser = {
-            id: user.user.uid,
-            name: user.user.displayName,
-            email: user.user.email,
-            photoUrl: user.user.photoURL
-          }
-          commit('setUser', newUser)
+          var email = user.user.email
+          var name = user.user.displayName
+          var photoUrl = user.user.photoURL
+          $http.post('vue_user_create.json',{
+  			      email: email,
+              name: name,
+              image: photoUrl
+  		    })
+          .then((result) => {
+              console.log(result)
+              var q_user_id = result.data.user.id;
+              var newUser = {
+                uid: user.user.uid,
+                name: user.user.displayName,
+                email: user.user.email,
+                photoUrl: user.user.photoURL,
+                q_user_id: q_user_id
+              }
+              console.log(newUser)
+              commit('setUser', newUser)
+          })
         }
       )
       .catch(
