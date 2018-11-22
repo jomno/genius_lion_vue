@@ -6,6 +6,7 @@ import firebase from 'firebase'
 import firebaseui from 'firebaseui';
 import { config } from './helpers/firebaseConfig'
 import { $http } from '@/utils/api'
+import { store } from './store'
 
 import Framework7 from 'framework7/framework7.esm.bundle.js';
 import Framework7Vue from 'framework7-vue/framework7-vue.esm.bundle.js';
@@ -23,5 +24,6 @@ Vue.prototype.$http = $http
 /* eslint-disable no-new */
 const app = new Vue({
   el: '#app',
+  store,
   render: (h) => h(App)
 });

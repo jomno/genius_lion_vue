@@ -1,19 +1,14 @@
 <template>
   <f7-page>
-    <f7-block-title>LOGO</f7-block-title>
+    <f7-block-title>{{this.$store.getters.user.name}}</f7-block-title>
     <f7-block>
       <p v-if="loading">Loading...</p>
     </f7-block>
-    <template v-if=user>
-      <img :src="user.photoURL" alt="avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+    <template v-if="this.$store.getters.user">
+      <img :src="this.$store.getters.user.photoUrl" alt="avatar" style="width: 30px; height: 30px; border-radius: 50%;">
       <button @click="signOut">Sign Out</button>
-      <ul>
-        <li v-for="item in items">{{ item.name }}
-          <button @click="removeItem(item)">&times;</button>
-        </li>
-      </ul>
     </template>
-    <template v-if="!user && !loading">
+    <template v-if="!this.$store.getters.user && !this.$store.getters.loading">
       <button @click="signInWithGoogle">Sign in with Google</button>
     </template>
     <f7-list>
@@ -39,21 +34,14 @@
   firebase.initializeApp(config);
 
   export default {
-    beforeCreate: function() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.user = user
-          // this.$bindAsArray('items', db.ref(`items/${user.uid}`))
-        }
-        this.loading = false
-      })
-    },
-    data() {
-      return {
-        loading: true,
-        user: null,
-      }
-    },
+    // beforeCreate: function() {
+    //   firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
+    //       this.user = user
+    //     }
+    //     this.loading = false
+    //   })
+    // },
     components: {
       f7Page,
       f7BlockTitle,
@@ -61,6 +49,14 @@
       f7List,
       f7ListItem,
       f7Link,
+    },
+    computed: {
+      user () {
+        return this.$store.getters.user
+      },
+      loading () {
+        return this.$store.getters.loading
+      },
     },
     methods: {
       openIndicator() {
@@ -71,15 +67,10 @@
         }, 500);
       },
       signInWithGoogle: function() {
-        const provider = new firebase.auth.GoogleAuthProvider()
-        firebase.auth().signInWithRedirect(provider).then((result) => {
-          this.user = result.user
-        }).catch(err => console.log(error))
+        this.$store.dispatch('signUserInGoogle')
       },
       signOut: function() {
-        firebase.auth().signOut().then(() => {
-          this.user = null
-        }).catch(err => console.log(error))
+        this.$store.dispatch('logout')
       },
     }
   };
