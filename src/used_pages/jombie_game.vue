@@ -23,13 +23,12 @@
 
     <f7-block-title>생성된 방</f7-block-title>
     <f7-list inset>
-      <f7-list-item link="/wating_room/" title="원노와 함깨 춤을"  badge="1 / 8">
-        <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
-      </f7-list-item>
-      <f7-list-item link="#" title="양송이 버섯은 이응이 네개"  badge="2 / 8">
-        <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
-      </f7-list-item>
-      <f7-list-item link="#" title="ㄴㄴ"  badge="8 / 8">
+      <f7-list-item v-for="room in rooms"
+        v-bind:link="getUrl(room.id)"
+        v-bind:title="room.title"
+        v-bind:badge="currentMax(room.id)"
+        v-bind:key="room.id"
+      >
         <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
       </f7-list-item>
     </f7-list>
@@ -40,6 +39,8 @@
         <f7-list-input
           label="방 이름"
           type="text"
+          :value="title"
+          @input="title = $event.target.value"
           placeholder="이름"
           clear-button
         ></f7-list-input>
@@ -51,7 +52,7 @@
       <f7-block strong inset>
         <f7-segmented round round tag="p">
           <f7-button round outline popover-close>취소</f7-button>
-          <f7-button round outline active>생성</f7-button>
+          <f7-button round outline active @click="createRoom()">생성</f7-button>
         </f7-segmented>
       </f7-block>
 
@@ -75,6 +76,12 @@
       f7Button,
       f7Segmented,
     },
+    data() {
+      return {
+        title: "",
+        rooms: []
+      }
+    },
     methods: {
       openIndicator() {
         const self = this;
@@ -83,6 +90,33 @@
           self.$f7.preloader.hide();
         }, 500);
       },
-    }
+      getRooms(){
+        this.$http.get('/rooms')
+        .then((result) => {
+            console.log(result)
+            this.rooms = result.data.rooms;
+        })
+      },
+      createRoom(){
+        this.$http.defaults.headers.post['Content-Type'] = 'application/json';
+        this.$http.post('/rooms.json',{
+			      title: this.title,
+            max_user_num: 8
+		    }).then((result) => {
+            console.log(result)
+            this.rooms = result.data.rooms;
+        })
+      },
+      getUrl: function (id) {
+        return "/wating_room/"+id
+      },
+      currentMax: function(id) {
+        var room = _.find(this.rooms, {'id': id})
+        return room.step
+      }
+    },
+    mounted(){
+      this.getRooms();
+    },
   }
 </script>

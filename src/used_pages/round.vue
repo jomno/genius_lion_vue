@@ -40,7 +40,7 @@
         v-bind:key="user.id"
       >
         <f7-swipeout-actions right>
-          <f7-swipeout-button @click="getRooms()" close>아이템</f7-swipeout-button>
+          <f7-swipeout-button @click="more()" close>아이템</f7-swipeout-button>
           <f7-swipeout-button color="orange" @click="touch(user.id)" v-if="user.status === '터치 전' " close>터치</f7-swipeout-button>
           <!-- <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button> -->
         </f7-swipeout-actions>
@@ -182,7 +182,7 @@
       subscribe() {
         let pusher = new Pusher('05ae740a83e02c2ed494', { cluster: 'ap1' })
         pusher.subscribe('my-channel')
-        pusher.bind('my-event', data => {
+        pusher.bind('change_progress', data => {
           this.progress = data
         })
       }

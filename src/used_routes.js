@@ -25,7 +25,7 @@ export default [
     component: JombieGame,
   },
   {
-    path: '/wating_room/',
+    path: '/wating_room/:roomId',
     component: WatingRoom,
   },
   {
