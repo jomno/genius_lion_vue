@@ -40,7 +40,7 @@
         v-bind:key="user.id"
       >
         <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more" close>아이템</f7-swipeout-button>
+          <f7-swipeout-button @click="getRooms()" close>아이템</f7-swipeout-button>
           <f7-swipeout-button color="orange" @click="touch(user.id)" v-if="user.status === '터치 전' " close>터치</f7-swipeout-button>
           <!-- <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button> -->
         </f7-swipeout-actions>
@@ -50,7 +50,8 @@
 </template>
 
 <script>
-import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGroup, f7ListItemCell, f7ListItemRow, f7BlockFooter, f7Icon, f7Toggle } from 'framework7-vue';
+  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGroup, f7ListItemCell, f7ListItemRow, f7BlockFooter, f7Icon, f7Toggle } from 'framework7-vue';
+  import Pusher from 'pusher-js' // import Pusher
 
   export default {
     components: {
@@ -72,6 +73,7 @@ import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGrou
         start_time: 1542820154497, // 이 부분은 후에 데이터를 받아와서 비교하겠음
         timer: null,
         progress: 1,
+        rooms: [],
         users: [
           {
             id: 2,
@@ -170,6 +172,20 @@ import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGrou
           ],
         });
       },
+      getRooms(){
+        this.$http.get('/rooms')
+        .then((result) => {
+            console.log(result)
+            this.rooms = result.data.rooms;
+        })
+      },
+      subscribe() {
+        let pusher = new Pusher('05ae740a83e02c2ed494', { cluster: 'ap1' })
+        pusher.subscribe('my-channel')
+        pusher.bind('my-event', data => {
+          this.progress = data
+        })
+      }
     },
     mounted () {
       this.timer = setInterval(() => {
@@ -181,6 +197,10 @@ import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGrou
           console.log("지난 시간 : " + outTime/1000 + "초");
         }
       }, 9000)
+    },
+    created () {
+      // ...
+      this.subscribe()
     },
     beforeDestroy () {
       clearInterval(this.timer)
