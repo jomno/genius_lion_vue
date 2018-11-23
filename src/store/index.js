@@ -97,11 +97,21 @@ const actions = {
       )
   },
   autoSignIn ({commit}, payload) {
-    commit('setUser', {
-      id: payload.uid,
-      name: payload.displayName,
-      email: payload.email,
-      photoUrl: payload.photoURL
+    $http.post('vue_user_create.json',{
+        email: payload.email,
+        name: payload.displayName,
+        image: payload.photoURL
+    })
+    .then((result)=> {
+      var q_user_id = result.data.user.id;
+      commit('setUser', {
+        id: payload.uid,
+        name: payload.displayName,
+        email: payload.email,
+        photoUrl: payload.photoURL,
+        q_user_id: q_user_id
+
+      })
     })
   },
   logout ({commit}) {

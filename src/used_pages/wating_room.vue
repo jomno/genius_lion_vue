@@ -23,7 +23,7 @@
       <f7-list-button href="/open_job/"  title="게임 시작" color="red"></f7-list-button>
     </f7-list>
 
-    <f7-block-title>사용자 리스트</f7-block-title>
+    <f7-block-title>사용자 리스트 roomId : {{this.$f7route.params.roomId}}</f7-block-title>
     <f7-list>
       <f7-list-item title="양송이">
         <f7-icon slot="media" icon="demo-list-icon"></f7-icon>
@@ -59,6 +59,13 @@ import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGrou
         setTimeout(() => {
           self.$f7.preloader.hide();
         }, 500);
+      },
+      getRoomUsers(){
+        this.$http.get('/rooms/')
+        .then((result) => {
+            console.log(result)
+            this.rooms = result.data;
+        })
       },
     }
   };

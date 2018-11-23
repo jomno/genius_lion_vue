@@ -52,7 +52,7 @@
       <f7-block strong inset>
         <f7-segmented round round tag="p">
           <f7-button round outline popover-close>취소</f7-button>
-          <f7-button round outline active @click="createRoom()">생성</f7-button>
+          <f7-button round outline popover-close active @click="createRoom()">생성</f7-button>
         </f7-segmented>
       </f7-block>
 
@@ -91,20 +91,21 @@
         }, 500);
       },
       getRooms(){
-        this.$http.get('/rooms')
+        this.$http.get('/rooms.json')
         .then((result) => {
             console.log(result)
-            this.rooms = result.data.rooms;
+            this.rooms = result.data;
         })
       },
       createRoom(){
         this.$http.defaults.headers.post['Content-Type'] = 'application/json';
         this.$http.post('/rooms.json',{
+            q_user_id: this.$store.getters.user.q_user_id,
 			      title: this.title,
             max_user_num: 8
 		    }).then((result) => {
             console.log(result)
-            this.rooms = result.data.rooms;
+            this.rooms = result.data.all_rooms;
         })
       },
       getUrl: function (id) {
