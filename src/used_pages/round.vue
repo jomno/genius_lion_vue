@@ -40,8 +40,8 @@
         v-bind:key="user.id"
       >
         <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more()" close>아이템</f7-swipeout-button>
-          <f7-swipeout-button color="orange" @click="touch(user.id)" v-if="user.status === '터치 전' " close>터치</f7-swipeout-button>
+          <f7-swipeout-button @click="touchArarm(user.name, user.name)" close>아이템</f7-swipeout-button>
+          <f7-swipeout-button color="orange" @click="touch(user.id)" close>터치</f7-swipeout-button>
           <!-- <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button> -->
         </f7-swipeout-actions>
       </f7-list-item>
@@ -77,30 +77,30 @@
         users: [
           {
             id: 2,
-            name: "원트노",
+            name: "원트111노",
             status: "터치완료",
             statusColor: "green",
-            subtitle: "이 친구는 허접입니다."
+            subtitle: "level 1"
           },
           {
             id: 1,
             name: "정준홍",
             status: "터치 전",
             statusColor: "red",
-            subtitle: "이 친구는 허접입니다."
+            subtitle: "Level 2"
           },
           {
             id: 0,
             name: "정신우",
             status: "터치 전",
             statusColor: "red",
-            subtitle: "이 친구는 허접입니다."
+            subtitle: "Level 3"
           },
           { id: 3,
             name: "개고수",
             status: "터치완료",
             statusColor: "green",
-            subtitle: "이 친구는 개고수입니다."
+            subtitle: "Level 4"
           },
         ]
       };
@@ -127,10 +127,18 @@
       },
       touch(id) {
         const app = this.$f7;
-        const obj = this.findId(id)
+        const obj = this.findId(id);
+        const self = this;
         app.dialog.alert('좀비게임','터치하시겠습니까?', function(e) {
-          obj.status = "변경완료"
-          obj.statusColor = "green"
+          self.$http.post('/touches/'+id+"/send_require.json?q_user_id="+self.$store.getters.user.q_user_id)
+          .then((result) => {
+              console.log(result)
+              // this.rooms = result.data.rooms;
+              obj.status = "변경완료"
+              obj.statusColor = "green"
+              self.touchArarm(result.data.recieve_user.name, self.$store.getters.user.name )
+          })
+
         });
 
       },
@@ -185,7 +193,23 @@
         pusher.bind('change_progress', data => {
           this.progress = data
         })
-      }
+      },
+      touchArarm(a,b) {
+        const self = this;
+        // Create toast
+        if (!self.notificationCloseOnClick) {
+          self.notificationCloseOnClick = self.$f7.notification.create({
+            icon: '<i class="icon icon-f7"></i>',
+            title: '지니어스 라이온',
+            titleRightText: a + "와 " + b + "가 터치했습니다.",
+            subtitle: '',
+            text: '',
+            closeOnClick: true,
+          });
+        }
+        // Open it
+        self.notificationCloseOnClick.open();
+      },
     },
     mounted () {
       this.timer = setInterval(() => {

@@ -62,7 +62,10 @@
 
           <div class="card demo-card-header-pic" v-for="room in rooms">
             <div class="game_1 card-header align-items-flex-end">{{room.title}}</div>
-            <div class="card-footer"><a href="#" class="link">Like</a><a href="/jombie_game/" class="link">참가하기</a></div>
+            <div class="card-footer"><a href="#" class="link">Like</a>
+              <f7-button href="/jombie_game/" raised v-if="user.q_user_id">참가하기</f7-button>
+              <f7-button panel-open="right" raised v-else>로그인해주세요</f7-button>
+            </div>
           </div>
 
         </f7-block>
@@ -137,6 +140,17 @@
           { title: '신분교환' }
         ]
       };
+    },
+    computed: {
+      user () {
+        return this.$store.getters.user
+      },
+      loading () {
+        return this.$store.getters.loading
+      },
+      error () {
+        return this.$store.getters.error
+      },
     },
   };
 </script>

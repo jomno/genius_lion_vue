@@ -21,3 +21,6 @@ npm run build --report
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## 원노 설명
+```
+aws s3 sync ./dist s3://geniuslion.kr
+```

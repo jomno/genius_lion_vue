@@ -23,8 +23,8 @@
 
     <div data-effect="flip" class="swiper-container swiper-init demo-swiper demo-swiper-cube">
       <div class="swiper-wrapper">
-        <img src="../assets/img/job_back.png" alt="" class="swiper-slide">
-        <img src="../assets/img/job_human_b.png" alt="" class="swiper-slide">
+        <img src="/static/image/job_back.png" alt="" class="swiper-slide">
+        <img :src="randJob()" alt="" class="swiper-slide">
       </div>
     </div>
 
@@ -61,6 +61,12 @@ import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7ListGrou
           self.$f7.preloader.hide();
         }, 500);
       },
+      randJob() {
+        var rand = Math.floor(Math.random() * 2)
+        var job_ary = ["human","zom"]
+        return "/static/image/" + job_ary[rand] + ".png"
+
+      }
     }
   };
 </script>
